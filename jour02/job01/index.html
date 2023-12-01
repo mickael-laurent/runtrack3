@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Citation</title>
+</head>
+<body>
+  <article id="citation">
+    "La vie a beaucoup plus d’imagination que nous."
+  </article>
+  
+  <button id="button" onclick="citation()">Afficher la citation</button>
+  
+  <script>
+    function citation() {
+      // Récupération du contenu de l'élément avec l'ID "citation"
+      const citationElement = document.getElementById('citation');
+      
+      if (citationElement) {
+        // Affichage du contenu dans la console
+        console.log(citationElement.textContent.trim());
+      } else {
+        console.log('Élément non trouvé.');
+      }
+    }
+  </script>
+</body>
+</html>
