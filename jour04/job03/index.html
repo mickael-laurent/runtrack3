@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Tri des données Pokémon</title>
+</head>
+<body>
+    <form id="pokemonForm">
+        <label for="id">ID:</label>
+        <input type="text" id="id" name="id"><br><br>
+
+        <label for="nom">Nom:</label>
+        <input type="text" id="nom" name="nom"><br><br>
+
+        <label for="type">Type:</label>
+        <select id="type" name="type">
+            <option value="">Tous</option>
+            <!-- REVIEW Récupérer dynamiquement les options -->
+            <option value="Fire">Fire</option>
+            <option value="Water">Water</option>
+            <option value="Poison">Poison</option>
+            <!-- Ajoutez ici les autres options pour les types de Pokémon -->
+        </select><br><br>
+
+        <input type="button" value="Filtrer" onclick="filtrerPokemon()">
+    </form>
+
+    <div id="resultats"></div>
+
+    <script>
+        function filtrerPokemon() {
+            // Récupérer les valeurs des champs du formulaire
+            var id = document.getElementById("id").value;
+            var nom = document.getElementById("nom").value;
+            var type = document.getElementById("type").value;
+
+            // Effectuer une requête Fetch pour récupérer le contenu du fichier pokemon.json
+            fetch("pokemon.json")
+                .then(response => response.json())
+                .then(data => {
+                    // Filtrer les éléments répondant aux critères sélectionnés
+                    console.log(data);
+                    var elementsFiltres = data.filter(pokemon =>
+                        (id === "" || pokemon.id.toString() === id) &&
+                        (nom === "" || pokemon.nom.toLowerCase().includes(nom.toLowerCase())) &&
+                        // REVIEW
+                        (type === "" || pokemon.type.includes(type))
+                    );
+
+                    // Afficher les éléments filtrés sur la page
+                    var resultatsDiv = document.getElementById("resultats");
+                    resultatsDiv.innerHTML = "";
+
+                    elementsFiltres.forEach(pokemon => {
+                        var pokemonDiv = document.createElement("div");
+                        // REVIEW 
+                        pokemonDiv.innerHTML = `<span>ID: ${pokemon.id}</span>, Nom: ${pokemon.name.french}, Type: ${pokemon.type}`;
+                        resultatsDiv.appendChild(pokemonDiv);
+                    });
+                })
+                .catch(error => console.log(error));
+        }
+    </script>
+</body>
+</html>
